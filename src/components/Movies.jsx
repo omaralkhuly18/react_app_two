@@ -3,16 +3,15 @@ import { getMovies } from '../services/fakeMovieService';
 import Like from './common/liked';
 import Pagination from './common/Pagination';
 import { paginate } from '../utils/paginate';
-import SidPar from './common/sidPar';
+import SidPar from './common/sidpar';
 import { getGenres } from '../services/fakeGenreService';
 
 class ComponentMovies extends Component {
   state = {
-    movies: getMovies(),
-    itemsFun: getGenres(),
+    movies: getMovies(), // جلب الأفلام
+    itemsFun: getGenres(), // جلب التصنيفات
     pageSize: 3,
-    currentPage: 1,
-    selectedItems: null // عنصر التصنيف المحدد
+    currentPage: 1
   };
 
   handleDelete = (movie) => {
@@ -60,7 +59,7 @@ class ComponentMovies extends Component {
     return (
       <div className="row">
         <div className="col-3">
-          <SidPar
+        <SidPar
             itemSidPar={this.state.itemsFun}
             onItemSidPar={this.handelItemSidPar}
             selectedItems={this.state.selectedItems}
