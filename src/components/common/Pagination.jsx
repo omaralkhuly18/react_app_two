@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 const Pagination = ({ itemCount, pageSize, currentPage, onChangePage }) => {
     const pagesCount = Math.ceil(itemCount / pageSize);
-    if (pagesCount === 1) return null; // No need for pagination if there is only one page
+    if (pagesCount === 1) return null;
 
     const pages = _.range(1, pagesCount + 1);
 
@@ -12,7 +12,7 @@ const Pagination = ({ itemCount, pageSize, currentPage, onChangePage }) => {
             <ul className="pagination">
                 {pages.map(page => (
                     <li key={page} className={page === currentPage ? "page-item active" : "page-item"}>
-                        <a onClick={() => onChangePage(page)} className="page-link" href="#">
+                        <a onClick={() => onChangePage(page)} className="page-link">
                             {page}
                         </a>
                     </li>

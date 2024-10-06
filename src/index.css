@@ -37,3 +37,8 @@ code {
   width: 75%;
   margin-bottom: 3%;
 }
+
+.page-item,
+.list-group-item{
+  cursor: pointer;
+}

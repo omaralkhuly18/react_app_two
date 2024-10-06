@@ -131,6 +131,38 @@ const movies = [
     numberInStock: 5,
     dailyRentalRate: 4.2,
     liked: true
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd47182a",
+    title: "Harry Potter and the Sorcerer's Stone",
+    genre: { _id: "5b21ca3eeb7f6fbccd471827", name: "Fantasy" },
+    numberInStock: 5,
+    dailyRentalRate: 3.5,
+    liked: true
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd47182b",
+    title: "The Conjuring",
+    genre: { _id: "5b21ca3eeb7f6fbccd471828", name: "Horror" },
+    numberInStock: 4,
+    dailyRentalRate: 4.0,
+    liked: false
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd47182c",
+    title: "Star Wars: A New Hope",
+    genre: { _id: "5b21ca3eeb7f6fbccd471829", name: "Sci-Fi" },
+    numberInStock: 7,
+    dailyRentalRate: 4.5,
+    liked: true
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd47182d",
+    title: "The Notebook",
+    genre: { _id: "5b21ca3eeb7f6fbccd471830", name: "Romance" },
+    numberInStock: 6,
+    dailyRentalRate: 3.0,
+    liked: true
   }
 ];
 
