@@ -95,7 +95,7 @@ const movies = [
   {
     _id: "5b21ca3eeb7f6fbccd471825",
     title: "The Matrix",
-    genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+    genre: { _id: "5b21ca3eeb7f6fbccd471825", name: "Drama" },
     numberInStock: 5,
     dailyRentalRate: 3.8,
     liked: true
@@ -103,7 +103,7 @@ const movies = [
   {
     _id: "5b21ca3eeb7f6fbccd471826",
     title: "Jumanji: Welcome to the Jungle",
-    genre: { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
+    genre: { _id: "5b21ca3eeb7f6fbccd471826", name: "Adventure" },
     numberInStock: 6,
     dailyRentalRate: 3.2,
     liked: false

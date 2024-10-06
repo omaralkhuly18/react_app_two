@@ -1,28 +1,38 @@
 import React, { Component } from 'react';
-import { getMovies } from '../services/fakeMovieService';
-import Like from './common/liked';
-import Pagination from './common/Pagination';
-import { paginate } from '../utils/paginate';
-import SidPar from './common/sidpar';
-import { getGenres } from '../services/fakeGenreService';
+import { getMovies } from '../services/fakeMovieService'; // خدمة جلب الأفلام
+import Like from './common/liked'; // مكوّن الإعجاب
+import Pagination from './common/Pagination'; // مكوّن التصفح
+import { paginate } from '../utils/paginate'; // دالة التقسيم لعرض الأفلام في صفحات
+import SidPar from './common/sidpar'; // المكوّن الجانبي لعرض التصنيفات
+import { getGenres } from '../services/fakeGenreService'; // خدمة جلب التصنيفات
 
 class ComponentMovies extends Component {
   state = {
     movies: getMovies(), // جلب الأفلام
-    itemsFun: getGenres(), // جلب التصنيفات
+    itemsFun: [{ name: 'All Movies', _id: '' }, ...getGenres()], // إضافة "All Movies"
     pageSize: 3,
-    currentPage: 1
+    currentPage: 1,
+    selectedItems: null
   };
 
+  // تعيين العنصر الأول كـ "active" عند تحميل الصفحة لأول مرة
+  componentDidMount() {
+    const firstItem = this.state.itemsFun[0]; // العنصر الأول في التصنيفات
+    this.setState({ selectedItems: firstItem });
+  }
+
+  // حذف الفيلم
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
   };
 
+  // إعادة تحميل الصفحة
   handleReloadPage = () => {
     window.location.reload();
   };
 
+  // التعامل مع الإعجاب
   handleLike = (movie) => {
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
@@ -31,17 +41,19 @@ class ComponentMovies extends Component {
     this.setState({ movies });
   };
 
+  // تغيير الصفحة
   handleChangePage = (page) => {
     this.setState({ currentPage: page });
   };
 
+  // اختيار تصنيف
   handelItemSidPar = (itemSid) => {
-    this.setState({ selectedItems: itemSid });
+    this.setState({ selectedItems: itemSid, currentPage: 1 });
   };
 
   render() {
     const { length: countMovies } = this.state.movies;
-    const { pageSize, currentPage, movies: allMovies } = this.state;
+    const { pageSize, currentPage, movies: allMovies, selectedItems } = this.state;
 
     if (countMovies === 0) {
       return (
@@ -54,12 +66,18 @@ class ComponentMovies extends Component {
       );
     }
 
-    const movies = paginate(allMovies, currentPage, pageSize);
+    // تصفية الأفلام بناءً على التصنيف المختار، أو عرض كل الأفلام إذا تم اختيار "All Movies"
+    const filteredMovies = selectedItems && selectedItems._id
+      ? allMovies.filter((m) => m.genre._id === selectedItems._id)
+      : allMovies;
+
+    // تقسيم الأفلام بناءً على الصفحة الحالية وحجم الصفحة
+    const movies = paginate(filteredMovies, currentPage, pageSize);
 
     return (
       <div className="row">
         <div className="col-3">
-        <SidPar
+          <SidPar
             itemSidPar={this.state.itemsFun}
             onItemSidPar={this.handelItemSidPar}
             selectedItems={this.state.selectedItems}
@@ -67,7 +85,7 @@ class ComponentMovies extends Component {
         </div>
 
         <div className="col">
-          <h4 className="mg_container">Showing {countMovies} movies in the DataBase</h4>
+          <h4 className="mg_container">Showing {filteredMovies.length} movies in the DataBase</h4>
           <div className="table-responsive">
             <table className="table">
               <thead>
@@ -104,7 +122,7 @@ class ComponentMovies extends Component {
             </table>
           </div>
           <Pagination
-            itemCount={countMovies}
+            itemCount={filteredMovies.length}
             pageSize={pageSize}
             currentPage={currentPage}
             onChangePage={this.handleChangePage}
